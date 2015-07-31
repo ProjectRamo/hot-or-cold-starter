@@ -7,6 +7,7 @@
 function newGame(){
 	alert("Let's just say a new game started");
 	target = Math.round(Math.random()*100);
+  console.log(target)
   $('#guessList').empty();
   count = 0;
   $('#count').text(count+"")
@@ -31,10 +32,12 @@ $(document).ready(function(){
   		newGame();
   	});
 
-    $('#guessButton').click(function(){
+    $('form').submit(function(event){
+      event.preventDefault();
       count += 1;
-      guess = $('#userGuess').val();
+      guess = +$('#userGuess').val();
       gap = guess-target;
+      console.log("gap", gap)
       switch(gap) {
         case (gap < -10):
           feedback = "Cold, higher"
@@ -53,7 +56,8 @@ $(document).ready(function(){
         default:
           feedback = "Something is amiss!"
       }
-      if (guess==target) {
+      if (+guess===target) {
+        console.log("Should see feedback text", guess, target);
         $("#feedback").text(">> YOU WON! <<");
         alert ("You won! Yaaay");
         newGame();
